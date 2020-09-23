@@ -5,18 +5,21 @@ public class Enrolment implements Comparable<Enrolment> {
 
     private Module module;
 
-    private float internalMark;
+    private double internalMark;
 
-    private float examinationMark;
+    private double examinationMark;
 
-    private float finalGrade;
+    private double finalGrade;
 
-    public Enrolment(Student student, Module module, float internalMark, float examinationMark, float finalGrade) {
+    private double aggregatedMark;
+
+    public Enrolment(Student student, Module module, double internalMark, double examinationMark, double finalGrade) {
         this.student = student;
         this.module = module;
         this.internalMark = internalMark;
         this.examinationMark = examinationMark;
         this.finalGrade = finalGrade;
+        this.aggregatedMark = generateAggregatedMark();
     }
 
     public Student getStudent() {
@@ -35,32 +38,48 @@ public class Enrolment implements Comparable<Enrolment> {
         this.module = module;
     }
 
-    public float getInternalMark() {
+    public double getInternalMark() {
         return internalMark;
     }
 
-    public void setInternalMark(float internalMark) {
+    public void setInternalMark(double internalMark) {
         this.internalMark = internalMark;
     }
 
-    public float getExaminationMark() {
+    public double getExaminationMark() {
         return examinationMark;
     }
 
-    public void setExaminationMark(float examinationMark) {
+    public void setExaminationMark(double examinationMark) {
         this.examinationMark = examinationMark;
     }
 
-    public float getFinalGrade() {
+    public double getFinalGrade() {
         return finalGrade;
     }
 
-    public void setFinalGrade(float finalGrade) {
+    public void setFinalGrade(double finalGrade) {
         this.finalGrade = finalGrade;
+    }
+
+    public double generateAggregatedMark() {
+        return this.aggregatedMark = 0.4 * this.internalMark + 0.6 * this.examinationMark;
     }
 
     @Override
     public int compareTo(Enrolment enrolment) {
-        return this.student.getId() - enrolment.student.getId();
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Enrolment{" +
+                "student=" + student +
+                ", module=" + module +
+                ", internalMark=" + internalMark +
+                ", examinationMark=" + examinationMark +
+                ", finalGrade=" + finalGrade +
+                ", aggregatedMark=" + aggregatedMark +
+                '}';
     }
 }

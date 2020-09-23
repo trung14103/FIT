@@ -3,9 +3,13 @@ package courseman1;
 public class ElectiveModule extends Module {
     private String department;
 
-    public ElectiveModule(String code, String name, String semester, int credits, String department) {
-        super(code, name, semester, credits);
+    public ElectiveModule(String name, int semester, int credits, String department) {
+        super(name, semester, credits);
         this.department = department;
+    }
+
+    public ElectiveModule() {
+        super();
     }
 
     public String getDepartment() {
@@ -14,5 +18,12 @@ public class ElectiveModule extends Module {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return "ElectiveModule{" +
+                "department='" + department + '\'' +
+                '}';
     }
 }
