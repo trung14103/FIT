@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class EnrolmentManager {
-    protected ArrayList<Enrolment> enrolmentList = new ArrayList<>();
+    protected ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
 
     protected void addEnrolment(Enrolment enrolment) {
-        enrolmentList.add(enrolment);
+        if (getEnrolment(enrolment.getStudent(), enrolment.getModule()) != null) {
+            System.out.println("Enrolment Already Existed");
+        } else {
+            enrolmentList.add(enrolment);
+            System.out.println("Add Enrolment Successfully");
+        }
     }
 
     protected Enrolment getEnrolment(Student student, Module module) {
@@ -23,8 +28,15 @@ public class EnrolmentManager {
 
     protected String reportAssessment() {
         StringBuilder report_str = new StringBuilder();
+        report_str.append("---------------------REPORT WITH NO ASSESSMENT------------------------------");
         for (Enrolment enrolment : enrolmentList) {
-            report_str.append(enrolment.toString());
+            report_str.append("\n");
+            report_str.append(String.format("%10s %15s %20s %18s %15s", "MODULE ID", "MODULE NAME", "MODULE SEMESTER", "STUDENT CODE", "STUDENT NAME", "STUDENT DOB"));
+            report_str.append("\n");
+            report_str.append(String.format("%8s %14s %16s %22s %16s",
+                    enrolment.getModule().getCode(), enrolment.getModule().getName(), enrolment.getModule().getSemester(), enrolment.getStudent().getId(), enrolment.getStudent().getName(), enrolment.getStudent().getDob()));
+            report_str.append("\n");
+            report_str.append("----------------------------------------------------------------------------------");
             report_str.append("\n");
         }
         return report_str.toString();
@@ -32,14 +44,21 @@ public class EnrolmentManager {
 
     protected String report() {
         StringBuilder report_str = new StringBuilder();
+        report_str.append("*------------------------------FULL REPORT-----------------------------------------*");
         for (Enrolment enrolment : enrolmentList) {
-            report_str.append(enrolment.getModule().toString()).append(enrolment.getStudent());
+            report_str.append("\n");
+            report_str.append(String.format("%10s %15s %15s %20s %15s", "MODULE NAME", "STUDENT NAME", "INTERNAL MARK", "EXAMINATION MARK", "FINAL MARK"));
+            report_str.append("\n");
+            report_str.append(String.format("%8s %18s %10s %15s %20s",
+                    enrolment.getModule().getName(), enrolment.getStudent().getName(), enrolment.getInternalMark(), enrolment.getExaminationMark(), enrolment.getFinalGrade()));
+            report_str.append("\n");
+            report_str.append("----------------------------------------------------------------------------------");
             report_str.append("\n");
         }
         return report_str.toString();
     }
 
     protected void sort() {
-        Collections.sort(enrolmentList);
+        enrolmentList.sort(Collections.reverseOrder());
     }
 }

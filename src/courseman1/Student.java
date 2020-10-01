@@ -2,11 +2,9 @@ package courseman1;
 
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Student {
-    private static Map<Integer, Integer> studentYearMaps = new HashMap<>();
+    private static int studentAmount  = 0;
 
     private String id;
 
@@ -20,6 +18,7 @@ public class Student {
 
 
     public Student(String name, String dob, String address, String email) {
+        studentAmount++;
         this.id = generateStudentId();
         this.name = name;
         this.dob = dob;
@@ -27,16 +26,6 @@ public class Student {
         this.email = email;
     }
 
-    private int getAssignedYear(int year) {
-        try {
-            int currentStudentCount = studentYearMaps.get(year);
-            studentYearMaps.put(year, currentStudentCount++);
-            return currentStudentCount;
-        } catch (Exception e) {
-            studentYearMaps.put(year, 1);
-            return 1;
-        }
-    }
 
     public String getId() {
         return id;
@@ -80,7 +69,7 @@ public class Student {
 
     public String generateStudentId() {
         int currentYear = LocalDate.now().getYear();
-        return "S" + (currentYear + getAssignedYear(currentYear));
+        return "S" + (currentYear + studentAmount);
     }
 
     @Override

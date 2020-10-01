@@ -9,7 +9,7 @@ public class Enrolment implements Comparable<Enrolment> {
 
     private double examinationMark;
 
-    private double finalGrade;
+    private String finalGrade;
 
     private double aggregatedMark;
 
@@ -18,8 +18,13 @@ public class Enrolment implements Comparable<Enrolment> {
         this.module = module;
         this.internalMark = internalMark;
         this.examinationMark = examinationMark;
-        this.finalGrade = finalGrade;
         this.aggregatedMark = generateAggregatedMark();
+        this.finalGrade = generateFinalGrade();
+    }
+
+    public Enrolment(Student student, Module module) {
+        this.student = student;
+        this.module = module;
     }
 
     public Student getStudent() {
@@ -54,21 +59,35 @@ public class Enrolment implements Comparable<Enrolment> {
         this.examinationMark = examinationMark;
     }
 
-    public double getFinalGrade() {
+    public String getFinalGrade() {
         return finalGrade;
     }
 
-    public void setFinalGrade(double finalGrade) {
+    public void setFinalGrade(String finalGrade) {
         this.finalGrade = finalGrade;
     }
 
-    public double generateAggregatedMark() {
+    private double generateAggregatedMark() {
         return this.aggregatedMark = 0.4 * this.internalMark + 0.6 * this.examinationMark;
     }
 
+    private String generateFinalGrade() {
+        String finalGradeText = null;
+        if (this.aggregatedMark >= 5) {
+            finalGradeText = FinalGradeEnum.P.getText();
+        } else if (this.aggregatedMark < 5) {
+            finalGradeText = FinalGradeEnum.F.getText();
+        } else if (this.aggregatedMark >= 7) {
+            finalGradeText = FinalGradeEnum.G.getText();
+        } else if (this.aggregatedMark > 8.5) {
+            finalGradeText = FinalGradeEnum.E.getText();
+        }
+        return finalGradeText;
+    }
+
     @Override
-    public int compareTo(Enrolment enrolment) {
-        return 0;
+    public int compareTo(Enrolment otherEnrolment) {
+        return this.getStudent().getId().compareTo(otherEnrolment.getStudent().getId());
     }
 
     @Override

@@ -22,8 +22,12 @@ public class ElectiveModule extends Module {
 
     @Override
     public String toString() {
-        return "ElectiveModule{" +
-                "department='" + department + '\'' +
+        return "Module{" +
+                "code='" + super.getCode() + '\'' +
+                ", name='" + super.getName() + '\'' +
+                ", semester=" + super.getSemester() +
+                ", credits=" + super.getCredits() +
+                ", department='" + department + '\'' +
                 '}';
     }
 }
